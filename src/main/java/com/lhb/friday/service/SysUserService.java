@@ -85,4 +85,6 @@ public interface SysUserService {
 
 
     Results save(SysUser sysUser, Integer roleId);
+
+    Results<SysUser> updateUser(SysUserDTO userDto, Integer roleId);
 }

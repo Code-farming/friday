@@ -48,6 +48,9 @@
     <update id="update">
         update friday.sys_role_user
         <set>
+            <if test="roleId != null">
+                roleId = #{roleId}
+            </if>
         </set>
         where userId = #{userId}
     </update>

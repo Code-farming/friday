@@ -5,6 +5,7 @@ import com.lhb.friday.entity.SysRole;
 import com.lhb.friday.dao.SysRoleDao;
 import com.lhb.friday.service.SysRoleService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
  * @since 2020-03-16 12:20:43
  */
 @Service("sysRoleService")
+@Transactional
 public class SysRoleServiceImpl implements SysRoleService {
     @Resource
     private SysRoleDao sysRoleDao;

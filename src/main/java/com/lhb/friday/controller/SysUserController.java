@@ -48,6 +48,11 @@ public class SysUserController {
         return this.sysUserService.queryById(id);
     }
 
+    /**
+     * 分页查询用户的数据
+     * @param tableRequest
+     * @return
+     */
     @RequestMapping("/list")
     @ResponseBody
     public Results<SysUser> getUserList(PageTableRequest tableRequest) {
@@ -58,12 +63,23 @@ public class SysUserController {
         return Results.success("获取数据成功", count, userList);
     }
 
+    /**
+     * 跳转到新增用户页面
+     * @param model
+     * @return
+     */
     @GetMapping(value = "/add")
     public String addUser(Model model) {
         model.addAttribute("sysUser",new SysUser());
         return "user/user-add";
     }
 
+    /**
+     * 新增用户
+     * @param sysUserDTO
+     * @param roleId
+     * @return
+     */
     @PostMapping("/add")
     @ResponseBody
     public Results saveUser(SysUserDTO sysUserDTO, Integer roleId) {
@@ -90,13 +106,46 @@ public class SysUserController {
     }
 
     String pattern = "yyyy-MM-dd";
-
     @InitBinder
     public void initBinder(WebDataBinder binder,WebRequest request){
         binder.registerCustomEditor(Date.class,new CustomDateEditor(new SimpleDateFormat(pattern),true));
-
     }
 
+    /**
+     * 跳转到编辑用户的页面
+     * @param model
+     * @param user
+     * @return
+     */
+    @GetMapping(value = "/edit")
+    public String editUser(Model model, SysUser user) {
+        model.addAttribute("sysUser",sysUserService.queryById(user.getId()));
+        return "user/user-edit";
+    }
 
+    @PostMapping(value = "/edit")
+    @ResponseBody
+    public Results<SysUser> updateUser( SysUserDTO userDto,Integer roleId) {
+        SysUser sysUser = null;
+        sysUser = sysUserService.getUserByUsername(userDto.getUsername());
+        if(sysUser != null && !(sysUser.getId().equals(userDto.getId()))){
+            return Results.failure(ResponseCode.USERNAME_REPEAT.getCode(),ResponseCode.USERNAME_REPEAT.getMessage());
+        }
+        sysUser = sysUserService.getUserByPhone(userDto.getTelephone());
+        if(sysUser != null && !(sysUser.getId().equals(userDto.getId()))){
+            return Results.failure(ResponseCode.PHONE_REPEAT.getCode(),ResponseCode.PHONE_REPEAT.getMessage());
+        }
+        sysUser = sysUserService.getUserByEmail(userDto.getEmail());
+        if(sysUser != null && !(sysUser.getId().equals(userDto.getId()))){
+            return Results.failure(ResponseCode.EMAIL_REPEAT.getCode(),ResponseCode.EMAIL_REPEAT.getMessage());
+        }
+        return sysUserService.updateUser(userDto,roleId);
+    }
 
+    @GetMapping(value = "/delete")
+    @ResponseBody
+    public Results<SysUser> deleteUser( SysUserDTO userDto) {
+        sysUserService.deleteById(userDto.getId());
+        return Results.success();
+    }
 }

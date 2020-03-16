@@ -3,6 +3,7 @@ package com.lhb.friday.service.impl;
 import com.lhb.friday.base.result.Results;
 import com.lhb.friday.dao.SysRoleUserDao;
 import com.lhb.friday.dao.SysUserDao;
+import com.lhb.friday.dto.SysUserDTO;
 import com.lhb.friday.entity.SysRoleUser;
 import com.lhb.friday.entity.SysUser;
 import com.lhb.friday.service.SysUserService;
@@ -90,6 +91,7 @@ public class SysUserServiceImpl implements SysUserService {
      */
     @Override
     public boolean deleteById(Integer id) {
+        sysRoleUserDao.deleteById(id.intValue());
         return this.sysUserDao.deleteById(id) > 0;
     }
 
@@ -129,6 +131,24 @@ public class SysUserServiceImpl implements SysUserService {
             return Results.success();
         }
         return Results.failure();
+    }
+
+    @Override
+    public Results<SysUser> updateUser(SysUserDTO userDto, Integer roleId) {
+        if(roleId != null){
+            sysUserDao.update(userDto);
+            SysRoleUser sysRoleUser = new SysRoleUser();
+            sysRoleUser.setUserId(userDto.getId().intValue());
+            sysRoleUser.setRoleId(roleId);
+            if(sysRoleUserDao.queryById(userDto.getId().intValue())!= null){
+                sysRoleUserDao.update(sysRoleUser);
+            }else{
+                sysRoleUserDao.insert(sysRoleUser);
+            }
+            return Results.success();
+        }else{
+            return Results.failure();
+        }
     }
 
 }
