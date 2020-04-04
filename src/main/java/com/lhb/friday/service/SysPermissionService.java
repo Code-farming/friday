@@ -1,17 +1,18 @@
 package com.lhb.friday.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.lhb.friday.base.result.Results;
-import com.lhb.friday.dto.SysRoleDTO;
-import com.lhb.friday.entity.SysRole;
+import com.lhb.friday.entity.SysPermission;
+
 import java.util.List;
 
 /**
- * (SysRole)表服务接口
+ * (SysPermission)表服务接口
  *
  * @author LHb
- * @since 2020-03-16 12:20:43
+ * @since 2020-04-04 20:15:34
  */
-public interface SysRoleService {
+public interface SysPermissionService {
 
     /**
      * 通过ID查询单条数据
@@ -19,32 +20,32 @@ public interface SysRoleService {
      * @param id 主键
      * @return 实例对象
      */
-    SysRole queryById(Integer id);
+    SysPermission queryById(Integer id);
 
     /**
      * 查询多条数据
      *
      * @param offset 查询起始位置
-     * @param limit 查询条数
+     * @param limit  查询条数
      * @return 对象列表
      */
-    List<SysRole> queryAllByLimit(int offset, int limit);
+    List<SysPermission> queryAllByLimit(int offset, int limit);
 
     /**
      * 新增数据
      *
-     * @param sysRole 实例对象
+     * @param sysPermission 实例对象
      * @return 实例对象
      */
-    SysRole insert(SysRole sysRole);
+    SysPermission insert(SysPermission sysPermission);
 
     /**
      * 修改数据
      *
-     * @param sysRole 实例对象
+     * @param sysPermission 实例对象
      * @return 实例对象
      */
-    SysRole update(SysRole sysRole);
+    SysPermission update(SysPermission sysPermission);
 
     /**
      * 通过主键删除数据
@@ -54,11 +55,7 @@ public interface SysRoleService {
      */
     boolean deleteById(Integer id);
 
-    Results<SysRole> getAllRole();
+    Results<JSONArray> listAllPermission();
 
-    Results<SysRole> getAllRolesByPage(Integer offset, Integer limit);
-
-    Results<SysRole> save(SysRoleDTO sysRoleDTO);
-
-    Results updateRole(SysRoleDTO sysRoleDTO);
+    Results<SysPermission> listByRoleId(Integer roleId);
 }

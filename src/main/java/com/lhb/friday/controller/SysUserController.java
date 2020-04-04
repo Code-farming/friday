@@ -148,4 +148,13 @@ public class SysUserController {
         sysUserService.deleteById(userDto.getId());
         return Results.success();
     }
+
+
+    @RequestMapping("/findUserByFuzzyUserName")
+    @ResponseBody
+    public Results<SysUser> findUserByFuzzyUserName(PageTableRequest tableRequest,String username) {
+        tableRequest.countOffset();
+        return sysUserService.getUserByFuzzyUserName(username,tableRequest.getOffset(),tableRequest.getLimit());
+    }
+
 }

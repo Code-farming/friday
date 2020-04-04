@@ -1,4 +1,4 @@
-package com.lhb.friday.controller.apii;
+package com.lhb.friday.controller.api;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -151,4 +151,16 @@ public class SysUserServiceImpl implements SysUserService {
         }
     }
 
+    /**
+     * 根据用户名模糊查询用户
+     * @param username
+     * @param offset
+     * @param limit
+     * @return
+     */
+    @Override
+    public Results<SysUser> getUserByFuzzyUserName(String username, Integer offset, Integer limit) {
+        return Results.success(sysUserDao.getUserCountByFuzzyUserName(username),sysUserDao.getUserPageByFuzzyUserName(username,offset,limit));
+    }
+
 }

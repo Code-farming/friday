@@ -32,7 +32,7 @@
                                 <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
                             </div>
                             <div class="layui-inline layui-show-xs-block">
-                                <button class="layui-btn"  lay-submit="" lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
+                                <button class="layui-btn"  lay-submit="search" lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
                             </div>
                         </form>
                     </div>
@@ -61,7 +61,7 @@
 <script>
     layui.use('table', function () {
         var table = layui.table;
-
+        form = layui.form;
         //第一个实例
         table.render({
             elem: '#table'
@@ -120,6 +120,7 @@
                 elem: '#table'
                 ,url: '/user/findUserByFuzzyUserName' //数据接口
                 ,page: true //开启分页
+                //接口的其他参数
                 ,where:{
                     "username":username
                 }

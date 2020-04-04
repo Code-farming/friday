@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhb.friday.dao.SysRolePermissionDao">
+
+    <resultMap type="com.lhb.friday.entity.SysRolePermission" id="SysRolePermissionMap">
+        <result property="roleId" column="roleId" jdbcType="INTEGER"/>
+        <result property="permissionId" column="permissionId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SysRolePermissionMap">
+        select
+          roleId, permissionId
+        from friday.sys_role_permission
+        where roleId = #{roleId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SysRolePermissionMap">
+        select
+          roleId, permissionId
+        from friday.sys_role_permission
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SysRolePermissionMap">
+        select
+          roleId, permissionId
+        from friday.sys_role_permission
+        <where>
+            <if test="roleIdv != null">
+                and roleId = #{roleId}
+            </if>
+            <if test="permissionId != null">
+                and permissionId = #{permissionId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="roleId" useGeneratedKeys="true">
+        insert into friday.sys_role_permission()
+        values ()
+    </insert>
+
+    <insert id="save">
+        insert into friday.sys_role_permission(roleId, permissionId) values
+        <foreach collection="permissionIds" item="permissionId"
+                 separator=",">
+            (#{roleId}, #{permissionId})
+        </foreach>
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update friday.sys_role_permission
+        <set>
+        </set>
+        where roleId = #{roleId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from friday.sys_role_permission where roleId = #{roleId}
+    </delete>
+
+    <delete id="deleteRolePermission">
+        delete from friday.sys_role_permission where roleId = #{roleId}
+    </delete>
+
+</mapper>

@@ -93,4 +93,19 @@ public interface SysUserDao {
      */
     SysUser getUserByEmail(String email);
 
+    /**
+     * 通过username模糊查询用户的数目
+     * @param username
+     * @return
+     */
+    Integer getUserCountByFuzzyUserName(String username);
+
+    /**
+     * 通过username进行模糊的分页查询
+     * @param username
+     * @param offset
+     * @param limit
+     * @return
+     */
+    List<SysUser> getUserPageByFuzzyUserName(@Param("username") String username, @Param("offset") Integer offset, @Param("limit") Integer limit);
 }

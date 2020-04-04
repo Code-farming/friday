@@ -87,4 +87,7 @@ public interface SysUserService {
     Results save(SysUser sysUser, Integer roleId);
 
     Results<SysUser> updateUser(SysUserDTO userDto, Integer roleId);
+
+    Results<SysUser> getUserByFuzzyUserName(String username, Integer offset, Integer limit);
+
 }
